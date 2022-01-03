@@ -68,14 +68,14 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 		pApp!=NULL ) {
 		strcpy(pApp->m_options.m_clearPassword, pszPassword);
 	}
-	if (pszUser!=NULL && strlen(pszUser) > 0 &&
-			pApp!=NULL ) {
-				strcpy(pApp->m_options.m_UserName, pszUser);
-	}
-	if (pszDomain!=NULL && strlen(pszDomain) > 0 &&
-			pApp!=NULL ) {
-				strcpy(pApp->m_options.m_Domain, pszDomain);
-	}
+	//if (pszUser!=NULL && strlen(pszUser) > 0 &&
+	//		pApp!=NULL ) {
+	//			strcpy(pApp->m_options.m_UserName, pszUser);
+	//}
+	//if (pszDomain!=NULL && strlen(pszDomain) > 0 &&
+	//		pApp!=NULL ) {
+	//			strcpy(pApp->m_options.m_Domain, pszDomain);
+	//}
 	if (pszDSM!=NULL && strlen(pszDSM) > 0 &&
 			pApp!=NULL ) {
 					pApp->m_options.m_fUseDSMPlugin = true;
@@ -84,16 +84,17 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 	}
 	
 	// start the new connection.
-	return pApp->NewConnection ( host, iPort );
-
+	//return pApp->NewConnection ( host, iPort );
+	pApp->NewConnection(host, iPort);
+	return TRUE;
 }
 
 VOID CUltraVncAxGlobalConstructor::ProcessKeyEvent( HWND hwnd, WPARAM wParam, LPARAM lParam )
 {
 	// call the implementation.
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
-	if ( pConn->m_running )
-		pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
+	//if ( pConn->m_running )
+	//	pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
 }
 
 charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& csCmdText, BOOL& bIsErr )
@@ -108,7 +109,7 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
 	if ( pConn->m_running )
 	{
-		if ( ::stricmp( csCmdText.c_str (), "sendctrlaltdel" ) == 0 )
+		/*if ( ::stricmp( csCmdText.c_str (), "sendctrlaltdel" ) == 0 )
 		{
 			pConn->SendFakeButtonEvent(hwnd, WM_COMMAND, ID_BUTTON_CAD, 0); 
 		}
@@ -155,11 +156,12 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 		else if ( ::stricmp( csCmdText.c_str (), "textchat" ) == 0 )
 		{
 			pConn->SendFakeButtonEvent(hwnd, WM_COMMAND, ID_BUTTON_TEXTCHAT, 0); 
-		}
+		}*/
 		
 		
 		
-		else if ( ::stricmp( csCmdText.c_str (), "fullcolors" ) == 0 )
+		//else if ( ::stricmp( csCmdText.c_str (), "fullcolors" ) == 0 )
+		if (::stricmp(csCmdText.c_str(), "fullcolors") == 0)
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_MAXCOLORS, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "256colors" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_256COLORS, 0 );
@@ -179,8 +181,8 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_NORMALSCREEN, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "viewonlytoggle" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_VIEWONLYTOGGLE, 0 );
-		else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
-			pConn->SizeWindow();
+		//else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
+		//	pConn->SizeWindow();
 		else
 		{
 			// return an error.

@@ -496,7 +496,7 @@ BYTE* CDSMPlugin::TransformBuffer(BYTE* pDataBuffer, int nDataLen, int* pnTransf
 #ifdef _VIEWER
 	omni_mutex_lock l(m_TransMutex);
 #else
-	omni_mutex_lock l(m_TransMutex,105);
+	//omni_mutex_lock l(m_TransMutex,105);
 #endif
 
 	m_pTransBuffer = (*m_PTransformBuffer)(pDataBuffer, nDataLen, pnTransformedDataLen);
