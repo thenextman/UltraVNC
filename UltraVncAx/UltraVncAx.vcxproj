@@ -134,9 +134,9 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\OutputFiles\Executables\Debug\UltraVncAx.dll</OutputFile>
       <ImportLibrary>.\Debug\UltraVncAx.lib</ImportLibrary>
-      <AdditionalDependencies>libjpeg-turbo-win.lib;comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;omnithread.lib;zlib1d.lib;rdr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libjpeg-turbo-win.lib;comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;omnithread.lib;zlib1d.lib;rdr.lib;zip32.lib;unz32lib.lib;libzstd_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\UltraVncAx.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>..\vncviewer\Debug;..\zlib\lib\Win32;..\OutputFiles\Executables\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\vncviewer\Debug;..\vncviewer\bin\Win32_Debug;..\zlib\lib\Win32;..\OutputFiles\Executables\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>regsvr32 /s /c "$(TargetPath)" 
