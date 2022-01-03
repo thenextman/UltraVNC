@@ -300,7 +300,7 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     <ClInclude Include="..\ZipUnZip32\ZipUnZip32.h" />
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\res\vncviewer.exe.manifest" />
+    <Manifest Include="..\vncviewer\res\vncviewer.exe.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
