@@ -283,7 +283,7 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     <ClInclude Include="..\vncviewer\Log.h" />
     <ClInclude Include="..\vncviewer\LowLevelHook.h" />
     <ClInclude Include="..\vncviewer\MRU.h" />
-    <ClInclude Include="..\res\resource.h" />
+    <ClInclude Include="..\vncviewer\res\resource.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="..\vncviewer\rfb.h" />
     <ClInclude Include="..\vncviewer\SessionDialog.h" />
