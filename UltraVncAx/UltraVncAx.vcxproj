@@ -171,7 +171,7 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     <ClCompile Include="..\DSMPlugin\DSMPlugin.cpp" />
     <ClCompile Include="..\vncviewer\Exception.cpp" />
     <ClCompile Include="..\vncviewer\FileTransfer.cpp" />
-    <ClCompile Include="..\vncviewer\Flasher.cpp" />
+    <!-- <ClCompile Include="..\vncviewer\Flasher.cpp" /> -->
     <ClCompile Include="..\vncviewer\FullScreenTitleBar.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="..\vncviewer\KeyMap.cpp" />
@@ -275,7 +275,7 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     <ClInclude Include="..\DSMPlugin\DSMPlugin.h" />
     <ClInclude Include="..\vncviewer\Exception.h" />
     <ClInclude Include="..\vncviewer\FileTransfer.h" />
-    <ClInclude Include="..\vncviewer\Flasher.h" />
+    <!-- <ClInclude Include="..\vncviewer\Flasher.h" /> -->
     <ClInclude Include="..\vncviewer\FullScreenTitleBar.h" />
     <ClInclude Include="..\vncviewer\FullScreenTitleBarConst.h" />
     <ClInclude Include="..\vncviewer\KeyMap.h" />
