@@ -86,7 +86,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\OutputFiles\Executables\Release\UltraVncAx.dll</OutputFile>
       <ImportLibrary>.\Release\UltraVncAx.lib</ImportLibrary>
-      <AdditionalDependencies>comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;libjpeg.lib;omnithread.lib;zlib.lib;rdr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;libjpeg-turbo-win.lib;omnithread.lib;zlib.lib;rdr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\UltraVncAx.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\OutputFiles\Executables\Release</AdditionalLibraryDirectories>
     </Link>
@@ -134,9 +134,9 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\OutputFiles\Executables\Debug\UltraVncAx.dll</OutputFile>
       <ImportLibrary>.\Debug\UltraVncAx.lib</ImportLibrary>
-      <AdditionalDependencies>libjpeg.lib;comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;omnithread.lib;zlib.lib;rdr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libjpeg-turbo-win.lib;comctl32.lib;winmm.lib;odbc32.lib;odbccp32.lib;wsock32.lib;omnithread.lib;zlib1d.lib;rdr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\UltraVncAx.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>..\OutputFiles\Executables\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\vncviewer\Debug;..\zlib\lib\Win32;..\OutputFiles\Executables\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>regsvr32 /s /c "$(TargetPath)" 
