@@ -106,7 +106,7 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>true</MinimalRebuild>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\omnithread;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;_ULTRAVNCAX_;__NT__;_WINSTATIC;__WIN32__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>..\OutputFiles\IntermediaryFiles\Debug\</AssemblerListingLocation>
