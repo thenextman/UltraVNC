@@ -111,9 +111,6 @@
     <ClCompile Include="..\vncviewer\FileTransfer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\vncviewer\Flasher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\vncviewer\FullScreenTitleBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -156,6 +153,42 @@
     <ClCompile Include="..\vncviewer\zrle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\vncviewer\directx\directxviewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\vnctouch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\Snapshot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\MessBox2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\ClientConnectionUltra2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\sessiondialogLoadSave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\SessionDialogTabs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vncviewer\KeyMapJap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\win32_helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Clipboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\UltraVncZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="UltraVncAx.idl">
@@ -172,9 +205,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\DSMPlugin\DSMPlugin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\res\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -214,9 +244,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\vncviewer\FileTransfer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vncviewer\Flasher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\vncviewer\FullScreenTitleBar.h">
@@ -267,11 +294,12 @@
     <ClInclude Include="..\vncviewer\VNCviewerApp32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\vncviewer\res\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\res\vncviewer.exe.manifest">
-      <Filter>Resource Files</Filter>
-    </Manifest>
+    <Manifest Include="..\vncviewer\res\vncviewer.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="UltraVncAx.def">

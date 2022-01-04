@@ -146,19 +146,17 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CICompile Include="..\common\win32_helpers.cpp" />
-    <CICompile Include="..\common\Clipboard.cpp" />
-    <CICompile Include="..\common\UltraVncZ.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\vncviewer\directx\directxviewer.cpp" />  
-    <ClCompile Include="..\vncviewer\display.cpp" />  
-    <ClCompile Include="..\vncviewer\vnctouch.cpp" />  
-    <ClCompile Include="..\vncviewer\Snapshot.cpp" /> 
-    <ClCompile Include="..\vncviewer\MessBox2.cpp" />  
-    <ClCompile Include="..\vncviewer\ClientConnectionUltra2.cpp" />  
-    <ClCompile Include="..\vncviewer\sessiondialogLoadSave.cpp" />    
-    <ClCompile Include="..\vncviewer\SessionDialogTabs.cpp" />   
+    <ClCompile Include="..\common\Clipboard.cpp" />
+    <ClCompile Include="..\common\UltraVncZ.cpp" />
+    <ClCompile Include="..\common\win32_helpers.cpp" />
+    <ClCompile Include="..\vncviewer\directx\directxviewer.cpp" />
+    <ClCompile Include="..\vncviewer\display.cpp" />
+    <ClCompile Include="..\vncviewer\vnctouch.cpp" />
+    <ClCompile Include="..\vncviewer\Snapshot.cpp" />
+    <ClCompile Include="..\vncviewer\MessBox2.cpp" />
+    <ClCompile Include="..\vncviewer\ClientConnectionUltra2.cpp" />
+    <ClCompile Include="..\vncviewer\sessiondialogLoadSave.cpp" />
+    <ClCompile Include="..\vncviewer\SessionDialogTabs.cpp" />
     <ClCompile Include="..\vncviewer\AboutBox.cpp" />
     <ClCompile Include="..\vncviewer\AccelKeys.cpp" />
     <ClCompile Include="..\vncviewer\AuthDialog.cpp" />
@@ -279,9 +277,6 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\win32_helpers.cpp" />
-    <ClInclude Include="..\common\Clipboard.cpp" />
-    <ClInclude Include="..\common\UltraVncZ.cpp" />
     <ClInclude Include="..\vncviewer\AboutBox.h" />
     <ClInclude Include="..\vncviewer\AccelKeys.h" />
     <ClInclude Include="..\vncviewer\AuthDialog.h" />
