@@ -139,10 +139,12 @@ echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
       <AdditionalLibraryDirectories>..\vncviewer\Debug;..\vncviewer\bin\Win32_Debug;..\zlib\lib\Win32;..\OutputFiles\Executables\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>regsvr32 /s /c "$(TargetPath)" 
-echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg" </Command>
-      <Message>Performing registration</Message>
-      <Outputs>$(OutDir)\regsvr32.trg;%(Outputs)</Outputs>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -18,62 +18,62 @@
 #include "windll.h"
 
 HINSTANCE hCurrentInst;
-#ifdef ZIPLIB
-/*  DLL Entry Point */
-#ifdef __BORLANDC__
-#pragma argsused
-/* Borland seems to want DllEntryPoint instead of DllMain like MSVC */
-#define DllMain DllEntryPoint
-#endif
-#ifdef WIN32
-BOOL WINAPI DllMain( HINSTANCE hInstance,
-                     DWORD dwReason,
-                     LPVOID plvReserved)
-#else
-int WINAPI LibMain( HINSTANCE hInstance,
-                        WORD wDataSegment,
-                        WORD wHeapSize,
-                        LPSTR lpszCmdLine )
-#endif
-{
-#ifndef WIN32
-/* The startup code for the DLL initializes the local heap(if there is one)
- with a call to LocalInit which locks the data segment. */
+//#ifdef ZIPLIB
+///*  DLL Entry Point */
+//#ifdef __BORLANDC__
+//#pragma argsused
+///* Borland seems to want DllEntryPoint instead of DllMain like MSVC */
+//#define DllMain DllEntryPoint
+//#endif
+//#ifdef WIN32
+//BOOL WINAPI DllMain( HINSTANCE hInstance,
+//                     DWORD dwReason,
+//                     LPVOID plvReserved)
+//#else
+//int WINAPI LibMain( HINSTANCE hInstance,
+//                        WORD wDataSegment,
+//                        WORD wHeapSize,
+//                        LPSTR lpszCmdLine )
+//#endif
+//{
+//#ifndef WIN32
+///* The startup code for the DLL initializes the local heap(if there is one)
+// with a call to LocalInit which locks the data segment. */
+//
+//if ( wHeapSize != 0 )
+//   {
+//   UnlockData( 0 );
+//   }
+//hCurrentInst = hInstance;
+//return 1;   /* Indicate that the DLL was initialized successfully. */
+//#else
+//BOOL rc = TRUE;
+//switch( dwReason )
+//   {
+//   case DLL_PROCESS_ATTACH:
+//      // DLL is loaded. Do your initialization here.
+//      // If cannot init, set rc to FALSE.
+//      hCurrentInst = hInstance;
+//      break;
+//
+//   case DLL_PROCESS_DETACH:
+//      // DLL is unloaded. Do your cleanup here.
+//      break;
+//   default:
+//      break;
+//   }
+//return rc;
+//#endif
+//}
 
-if ( wHeapSize != 0 )
-   {
-   UnlockData( 0 );
-   }
-hCurrentInst = hInstance;
-return 1;   /* Indicate that the DLL was initialized successfully. */
-#else
-BOOL rc = TRUE;
-switch( dwReason )
-   {
-   case DLL_PROCESS_ATTACH:
-      // DLL is loaded. Do your initialization here.
-      // If cannot init, set rc to FALSE.
-      hCurrentInst = hInstance;
-      break;
-
-   case DLL_PROCESS_DETACH:
-      // DLL is unloaded. Do your cleanup here.
-      break;
-   default:
-      break;
-   }
-return rc;
-#endif
-}
-
-#ifdef __BORLANDC__
-#pragma argsused
-#endif
-int FAR PASCAL WEP ( int bSystemExit )
-{
-return 1;
-}
-#endif /* ZIPLIB */
+//#ifdef __BORLANDC__
+//#pragma argsused
+//#endif
+//int FAR PASCAL WEP ( int bSystemExit )
+//{
+//return 1;
+//}
+//#endif /* ZIPLIB */
 
 LPSTR szCommentBuf;
 HANDLE hStr;
