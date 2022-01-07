@@ -140,7 +140,11 @@ public:
 
 	// Methods
 	FileTransfer(VNCviewerApp *pApp, ClientConnection *pCC);
+#ifndef _ULTRAVNCAX_
 	int DoDialog();
+#else
+	int DoDialog(HWND parent = NULL);
+#endif
    	virtual ~FileTransfer();
 	static BOOL CALLBACK FileTransferDlgProc(HWND hwndDlg,UINT uMsg,WPARAM wParam,LPARAM lParam);
 	static BOOL CALLBACK LFBWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

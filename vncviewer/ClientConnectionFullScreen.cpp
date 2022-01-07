@@ -170,7 +170,9 @@ void ClientConnection::RealiseFullScreenMode()
 		ShowWindow(m_hwndMain, SW_NORMAL);
 		style = GetWindowLong(m_hwndMain, GWL_STYLE);
 		style &= ~(WS_MAXIMIZE | WS_POPUP);
+#ifndef _ULTRAVNCAX_
 		style |= WS_DLGFRAME | WS_THICKFRAME | WS_CAPTION;
+#endif
 		SetWindowLong(m_hwndMain, GWL_STYLE, style);
 		SetWindowPos(m_hwndMain, HWND_NOTOPMOST, 0,0,100,100, SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED |SWP_NOREDRAW); //Modified by: Lars Werner (http://lars.werner.no) - Reason: Bugfix, The framework got invisible after moving, so a NCCALCSIZE needed to be called!
 		// adzm - 2010-07 - Extended clipboard

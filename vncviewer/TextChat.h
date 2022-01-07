@@ -51,7 +51,11 @@ public:
 	char*				m_szLocalName;
 	char*				m_szTextBoxBuffer;
 	bool				m_fPersistentTexts;
+#ifdef _ULTRAVNCAX_
+	static HMODULE				m_hRichEdit;
+#else
 	HMODULE				m_hRichEdit;
+#endif
 
 	// Methods
 	TextChat(VNCviewerApp *pApp, ClientConnection *pCC);

@@ -3243,10 +3243,19 @@ bool FileTransfer::IsDirectoryGetIt(char* szName, int size)
 	return false;
 }
 
+#ifndef _ULTRAVNCAX_
 int FileTransfer::DoDialog()
+#else
+int FileTransfer::DoDialog(HWND parent /*= NULL*/)
+#endif
 {
- 	return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_FILETRANSFER_DLG), 
-		NULL, (DLGPROC) FileTransferDlgProc, (LONG_PTR) this);
+#ifndef _ULTRAVNCAX_
+	return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_FILETRANSFER_DLG),
+		NULL, (DLGPROC)FileTransferDlgProc, (LONG)this);
+#else
+	return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_FILETRANSFER_DLG),
+		parent, (DLGPROC)FileTransferDlgProc, (LONG)this);
+#endif
 }
 
 

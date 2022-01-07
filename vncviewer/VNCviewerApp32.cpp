@@ -90,6 +90,44 @@ void VNCviewerApp32::NewConnection(bool Is_Listening) {
 	} 
 }
 
+
+#ifdef _ULTRAVNCAX_
+
+typedef struct _STimeoutThreadState
+{
+	_STimeoutThreadState(ClientConnection* _connection, BOOL* _pbStateStructValid)
+	{
+		connected = FALSE;
+		connection = _connection;
+		pbStateStructValid = _pbStateStructValid;
+	}
+
+	BOOL				connected;
+	ClientConnection* connection;
+	BOOL* pbStateStructValid;
+
+} STimeoutThreadState;
+
+static DWORD WINAPI TimeoutThread(LPVOID lpParameter)
+{
+	STimeoutThreadState* pState = (STimeoutThreadState*)lpParameter;
+
+	// wait.
+	::Sleep(10 * 1000);
+
+	// we have to close the connection ?
+	if (pState->connected == FALSE)
+		pState->connection->KillThread();
+
+	// return.
+	if (pState->pbStateStructValid)
+		*pState->pbStateStructValid = FALSE;
+	delete pState;
+	return 0;
+}
+
+#endif
+
 void VNCviewerApp32::NewConnection(bool Is_Listening,TCHAR *host, int port) {
 	ClientConnection *pcc = new ClientConnection(this, host,port);
 	try {

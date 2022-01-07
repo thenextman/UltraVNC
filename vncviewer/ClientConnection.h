@@ -177,6 +177,9 @@ public:
     bool SetRecvTimeout(int msecs = -1);
 
 	int IsDormant(){ return m_dormant;};
+#ifdef _ULTRAVNCAX_
+	void SendFakeButtonEvent(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
+#endif
 
 	void SendKeyEvent(CARD32 key, bool down);
 
@@ -285,7 +288,13 @@ private:
  	void SubProcessPointerEvent(int x, int y, DWORD keyflags);
 	void ProcessMouseWheel(int delta); // RealVNC 335 method
 	void SendPointerEvent(int x, int y, int buttonMask);
+#ifndef _ULTRAVNCAX_
     void ProcessKeyEvent(int virtkey, DWORD keyData);
+#else
+	public:
+		void ProcessKeyEvent(int virtkey, DWORD keyData);
+	private:
+#endif
 	//adzm 2010-09 - Ensure the mouse is moved to the last known spot
 	bool FlushThrottledMouseMove();
 

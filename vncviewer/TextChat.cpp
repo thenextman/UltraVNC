@@ -45,6 +45,11 @@ extern HINSTANCE m_hInstResDLL;
 extern char sz_E1[64];
 extern char sz_E2[64];
 
+#ifdef _ULTRAVNCAX_
+
+HMODULE TextChat::m_hRichEdit = NULL;
+#endif
+
 //
 //
 //
@@ -83,15 +88,28 @@ TextChat::TextChat(VNCviewerApp *pApp, ClientConnection *pCC)
 		}
 	}
 
-	//  Load the Rich Edit control DLL
-	m_hRichEdit = LoadLibrary( "RICHED32.DLL" );
+#ifdef _ULTRAVNCAX_
 	if (!m_hRichEdit)
-	{  
-		MessageBox( NULL, sz_E1,
-					sz_E2, MB_OK | MB_ICONEXCLAMATION );
+	{
+		//  Load the Rich Edit control DLL
+		m_hRichEdit = LoadLibrary("RICHED32.DLL");
+		if (!m_hRichEdit)
+		{
+			MessageBox(NULL, sz_E1,
+				sz_E2, MB_OK | MB_ICONEXCLAMATION);
+			// Todo: do normal edit instead (no colors)
+		}
+	}
+#else
+	//  Load the Rich Edit control DLL
+	m_hRichEdit = LoadLibrary("RICHED32.DLL");
+	if (!m_hRichEdit)
+	{
+		MessageBox(NULL, sz_E1,
+			sz_E2, MB_OK | MB_ICONEXCLAMATION);
 		// Todo: do normal edit instead (no colors)
 	}
-
+#endif
 }
 
 
@@ -110,8 +128,10 @@ TextChat::~TextChat()
 	m_fTextChatRunning = false;
 	SendMessage(m_hDlg, WM_COMMAND, IDOK, 0L);
 
-	if (m_hRichEdit != NULL) FreeLibrary(m_hRichEdit);
+#ifndef _ULTRAVNCAX_
 
+	if (m_hRichEdit != NULL) FreeLibrary(m_hRichEdit);
+#endif
 }
 
 
@@ -339,8 +359,15 @@ void TextChat::SendLocalText(void)
 //
 int TextChat::DoDialog()
 {
- 	return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_TEXTCHAT_DLG), 
-							NULL, (DLGPROC) TextChatDlgProc, (LONG_PTR) this);
+#ifndef _ULTRAVNCAX_
+	return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_TEXTCHAT_DLG),
+		NULL, (DLGPROC)TextChatDlgProc, (LONG_PTR)this);
+#else
+	HWND h = CreateDialogParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_TEXTCHAT_DLG),
+		NULL, (DLGPROC)TextChatDlgProc, (LONG_PTR)this);
+	ShowWindow(h, SW_SHOW);
+	return 0;
+#endif
 }
 
 

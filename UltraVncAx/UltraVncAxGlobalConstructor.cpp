@@ -85,7 +85,7 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 	
 	// start the new connection.
 	//return pApp->NewConnection ( host, iPort );
-	pApp->NewConnection(host, iPort);
+	pApp->NewConnection(false, host, iPort);
 	return TRUE;
 }
 
@@ -93,8 +93,8 @@ VOID CUltraVncAxGlobalConstructor::ProcessKeyEvent( HWND hwnd, WPARAM wParam, LP
 {
 	// call the implementation.
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
-	//if ( pConn->m_running )
-	//	pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
+	if ( pConn->m_running )
+		pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
 }
 
 charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& csCmdText, BOOL& bIsErr )
@@ -109,7 +109,7 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
 	if ( pConn->m_running )
 	{
-		/*if ( ::stricmp( csCmdText.c_str (), "sendctrlaltdel" ) == 0 )
+		if ( ::stricmp( csCmdText.c_str (), "sendctrlaltdel" ) == 0 )
 		{
 			pConn->SendFakeButtonEvent(hwnd, WM_COMMAND, ID_BUTTON_CAD, 0); 
 		}
@@ -156,12 +156,11 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 		else if ( ::stricmp( csCmdText.c_str (), "textchat" ) == 0 )
 		{
 			pConn->SendFakeButtonEvent(hwnd, WM_COMMAND, ID_BUTTON_TEXTCHAT, 0); 
-		}*/
+		}
 		
 		
 		
-		//else if ( ::stricmp( csCmdText.c_str (), "fullcolors" ) == 0 )
-		if (::stricmp(csCmdText.c_str(), "fullcolors") == 0)
+		else if ( ::stricmp( csCmdText.c_str (), "fullcolors" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_MAXCOLORS, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "256colors" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_256COLORS, 0 );

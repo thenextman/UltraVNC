@@ -26,4 +26,8 @@
 
 // Display the about box!
 
+#ifndef _ULTRAVNCAX_
 void ShowAboutBox();
+#else
+void ShowAboutBox(HWND parent = NULL);
+#endif

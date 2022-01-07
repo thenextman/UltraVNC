@@ -134,10 +134,19 @@ static LRESULT CALLBACK AboutDlgProc(HWND hwnd, UINT iMsg,
 	return FALSE;
 }
 
+#ifndef _ULTRAVNCAX_
 void ShowAboutBox()
+#else
+void ShowAboutBox(HWND parent /*= NULL*/)
+#endif
 {
-	int res = DialogBox(pApp->m_instance, 
- 		DIALOG_MAKEINTRESOURCE(IDD_APP_ABOUT),
-		NULL, (DLGPROC) AboutDlgProc);
-}
-	
+#ifndef _ULTRAVNCAX_
+        int res = DialogBox(pApp->m_instance,
+                DIALOG_MAKEINTRESOURCE(IDD_APP_ABOUT),
+                NULL, (DLGPROC)AboutDlgProc);
+#else
+        int res = DialogBox(pApp->m_instance,
+                DIALOG_MAKEINTRESOURCE(IDD_APP_ABOUT),
+                parent, (DLGPROC)AboutDlgProc);
+#endif
+}	
