@@ -88,7 +88,7 @@ STDMETHODIMP CUltraVncAxObj::Connect()
 
 	if ( hwndAppFrame == NULL )
 		return AtlReportError( GetObjectCLSID (), "Connect operation timed out or authentication error.", GUID_NULL, 0 );
-	else if ( hwndAppFrame == GetVncWnd() )
+	else if (hwndAppFrame == GetVncWnd())
 	{
 		// fire the connected ev...
 		m_bConnectedEvFired = TRUE;

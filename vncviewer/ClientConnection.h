@@ -290,9 +290,11 @@ private:
 	void SendPointerEvent(int x, int y, int buttonMask);
 #ifndef _ULTRAVNCAX_
     void ProcessKeyEvent(int virtkey, DWORD keyData);
+    void SizeWindow(bool noPosChange = true, bool noSizeChange = false);
 #else
 	public:
 		void ProcessKeyEvent(int virtkey, DWORD keyData);
+		void SizeWindow(bool noPosChange = true, bool noSizeChange = false);
 	private:
 #endif
 	//adzm 2010-09 - Ensure the mouse is moved to the last known spot
@@ -324,7 +326,6 @@ private:
 	void ReadScreenUpdate();
 	void Update(RECT *pRect);
 	bool IsOnlyOneMonitor();
-	void SizeWindow(bool noPosChange = true, bool noSizeChange = false);
 	bool ScrollScreen(int dx, int dy, bool absolute = false);
 	void UpdateScrollbars();
 	void AddRemoveScrollbars(HWND hwnd, RECT Rtb);

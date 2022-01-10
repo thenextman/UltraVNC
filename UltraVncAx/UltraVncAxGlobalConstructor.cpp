@@ -180,12 +180,12 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_NORMALSCREEN, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "viewonlytoggle" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_VIEWONLYTOGGLE, 0 );
-		//else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
-		//	pConn->SizeWindow();
+		else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
+			pConn->SizeWindow();
 		else
 		{
 			// return an error.
-			csRetVal = "Invalid command.";
+			csRetVal = csCmdText.c_str();
 			bIsErr = TRUE;
 		}
 	}

@@ -3778,6 +3778,9 @@ void ClientConnection::SizeWindow(bool noPosChange, bool noSizeChange)
 		workwidth = workrect.right - workrect.left;
 		workheight = workrect.bottom - workrect.top;
 	}
+	::GetClientRect(::GetParent(m_hwndMain), &workrect);
+	workwidth = workrect.right - workrect.left;
+	workheight = workrect.bottom - workrect.top;
 	vnclog.Print(2, _T("Screen work area is %d x %d\n"), workwidth, workheight);
 
 
@@ -7482,20 +7485,42 @@ void ClientConnection::GTGBS_CreateDisplay()
 		wndclass.hCursor		= LoadCursor(m_pApp->m_instance, MAKEINTRESOURCE(IDC_DOTCURSOR));
 	}
 	wndclass.hbrBackground	= (HBRUSH) GetStockObject(BLACK_BRUSH);
-    wndclass.lpszMenuName	= (const TCHAR *) NULL;
+	wndclass.lpszMenuName	= (const TCHAR *) NULL;
 	wndclass.lpszClassName	= _T("VNCMDI_Window");
 	RegisterClass(&wndclass);
-	const DWORD winstyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
+	//const DWORD winstyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
+	DWORD winstyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
 	  WS_MINIMIZEBOX |WS_MAXIMIZEBOX | WS_THICKFRAME | WS_VSCROLL | WS_HSCROLL;
+
+#ifdef _ULTRAVNCAX_
+
+	winstyle = WS_CHILD | WS_VSCROLL | WS_HSCROLL;
+
+	int		x = CW_USEDEFAULT;
+	int		y = CW_USEDEFAULT;
+	int		w = 320;
+	int		h = 200;
+
+	x = 0;
+	y = 0;
+
+	RECT		rectClient;
+	::GetClientRect(g_hwndAx, &rectClient);
+	w = rectClient.right;
+	h = rectClient.bottom;
+
+	HWND parent = g_hwndAx;
+
+#endif
+
 	m_hwndMain = CreateWindow(_T("VNCMDI_Window"),
 			  _T("VNCviewer"),
 			  winstyle,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  //320,200,
-			  NULL,                // Parent handle
+			  x,
+			  y,
+			  w,
+			  h,
+			  parent,
 			  NULL,                // Menu handle
 			  m_pApp->m_instance,
 			  (LPVOID)this);
@@ -8569,7 +8594,7 @@ LRESULT CALLBACK ClientConnection::WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 						// it hasn't already. Wait for it.
 						try {
 							void *p;
-							_this->join(&p);  // After joining, _this is no longer valid
+							//_this->join(&p);  // After joining, _this is no longer valid
 						} catch (omni_thread_invalid& e) {
 							// The thread probably hasn't been started yet,
 						}

@@ -130,17 +130,41 @@ static DWORD WINAPI TimeoutThread(LPVOID lpParameter)
 
 void VNCviewerApp32::NewConnection(bool Is_Listening,TCHAR *host, int port) {
 	ClientConnection *pcc = new ClientConnection(this, host,port);
+
+#ifdef _ULTRAVNCAX_
+
+	BOOL						bStateStructValid = TRUE;
+
+	STimeoutThreadState* pState = new STimeoutThreadState(pcc, &bStateStructValid);
+	DWORD						dwID;
+
+	HANDLE		h = ::CreateThread(NULL, 0, &TimeoutThread, pState, 0, &dwID);
+
+	if (h)
+		::CloseHandle(h);
+#endif
+
 	try {
 		//memcpy((char*)&pcc->m_opts,(char*)&m_options,sizeof(m_options));
 		pcc->m_opts = m_options;
 		pcc->m_Is_Listening=Is_Listening;
 		pcc->Run();
+
+#ifdef _ULTRAVNCAX_
+		if (bStateStructValid)
+			pState->connected = TRUE;
+#endif
 	} catch (Exception &e) {
 //		DestroyWindow(pcc->m_hwndMain); 
 		pcc->CloseWindows();
 		e.Report();	
 		delete pcc;
 	} 
+
+#ifdef _ULTRAVNCAX_
+	if (bStateStructValid)
+		pState->pbStateStructValid = NULL;
+#endif
 }
 
 void VNCviewerApp32::NewConnection(bool Is_Listening,SOCKET sock) {
