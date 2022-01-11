@@ -18,7 +18,8 @@
 #include "windll.h"
 
 HINSTANCE hCurrentInst;
-#ifdef ZIPLIB
+#ifdef SHARED_LIB
+#ifdef ZIPLIB 
 /*  DLL Entry Point */
 #ifdef __BORLANDC__
 #pragma argsused
@@ -74,6 +75,7 @@ int FAR PASCAL WEP ( int bSystemExit )
 return 1;
 }
 #endif /* ZIPLIB */
+#endif /* SHARED_LIB */
 
 LPSTR szCommentBuf;
 HANDLE hStr;
