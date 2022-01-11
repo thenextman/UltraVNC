@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.15)
 
 project(
     zstd C CXX
@@ -6,8 +6,9 @@ project(
 
 add_definitions("-DWIN32 -D_CONSOLE -D_CRT_SECURE_NO_WARNINGS")
 add_definitions("-DZSTD_MULTITHREAD=1 -DZSTD_LEGACY_SUPPORT=5")
-# add_definitions("/Oi /GL /Gy /Z7")
-# set(CMAKE_SHARED_LINKER_FLAGS "/OPT:REF /OPT:ICF /MACHINE:X86 /SUBSYSTEM:WINDOWS /LTCG")
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 set(TARGET_NAME zstd)
 
 add_library(${TARGET_NAME} STATIC "")

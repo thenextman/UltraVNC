@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.15)
 
 project(
     UltraVnc C CXX
@@ -8,6 +8,10 @@ set(CMAKE_COLOR_MAKEFILE ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(ConanHelper)
+
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Debug")
+endif()
 
 set(LIBJPEG_TARGET "CONAN_PKG::libjpeg-turbo")
 add_definitions("-DWITH_JPEG")
