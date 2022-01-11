@@ -26,3 +26,4 @@ INCLUDE_EXTERNAL_MSPROJECT(unzip ${CMAKE_SOURCE_DIR}\\zipunzip_src\\unzip\\windl
 
 add_subdirectory(zstd)
 add_subdirectory(UltraVncAx)
+add_subdirectory(UltraVncAxTest)

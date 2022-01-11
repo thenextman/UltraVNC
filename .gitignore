@@ -103,6 +103,7 @@ UltraVnc.sln
 **/UltraVncAx.vcxproj*
 **/ZERO_CHECK*
 **/ALL_BUILD*
+**/UltraVncAx.sln
 CMakeFiles
 .vs
 zstd.sln
