@@ -7427,7 +7427,7 @@ void ClientConnection::UpdateStatusFields()
 void ClientConnection::GTGBS_CreateDisplay()
 {
 	// Das eigendliche HauptFenster erstellen,
-	// welches das VNC-Fenster und die Toolbar enthält
+	// welches das VNC-Fenster und die Toolbar enthï¿½lt
 	WNDCLASS wndclass;
 
 	wndclass.style			= 0;
@@ -8754,6 +8754,13 @@ LRESULT CALLBACK ClientConnection::WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 	// We know about an unused variable here.
 #pragma warning(disable : 4101)
 }
+
+#ifdef _ULTRAVNCAX_
+void ClientConnection::SendFakeButtonEvent(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	ClientConnection::WndProcTBwin(hwnd, iMsg, wParam, lParam);
+}
+#endif
 
 //
 //

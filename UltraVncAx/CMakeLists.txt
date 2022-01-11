@@ -6,7 +6,7 @@ project(
 
 add_definitions("-DWIN32 -D_WINDOWS -D_USRDLL -D__NT__ -D__WIN32__")
 add_definitions("-D_AFXDLL -D_WINDLL")
-add_definitions("-D_WINSTATIC -D_ULTRAVNCAX_")
+add_definitions("-D_WINSTATIC -D_ULTRAVNCAX_ -D_VIEWER")
 add_definitions("/Oi /GL /Gy /Z7")
 set(CMAKE_SHARED_LINKER_FLAGS "/OPT:REF /OPT:ICF /MACHINE:X86 /SUBSYSTEM:WINDOWS /LTCG")
 

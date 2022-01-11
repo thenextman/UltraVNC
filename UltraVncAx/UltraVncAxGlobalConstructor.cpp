@@ -68,14 +68,14 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 		pApp!=NULL ) {
 		strcpy(pApp->m_options.m_clearPassword, pszPassword);
 	}
-	if (pszUser!=NULL && strlen(pszUser) > 0 &&
-			pApp!=NULL ) {
-				strcpy(pApp->m_options.m_UserName, pszUser);
-	}
-	if (pszDomain!=NULL && strlen(pszDomain) > 0 &&
-			pApp!=NULL ) {
-				strcpy(pApp->m_options.m_Domain, pszDomain);
-	}
+	//if (pszUser!=NULL && strlen(pszUser) > 0 &&
+	//		pApp!=NULL ) {
+	//			strcpy(pApp->m_options.m_UserName, pszUser);
+	//}
+	//if (pszDomain!=NULL && strlen(pszDomain) > 0 &&
+	//		pApp!=NULL ) {
+	//			strcpy(pApp->m_options.m_Domain, pszDomain);
+	//}
 	if (pszDSM!=NULL && strlen(pszDSM) > 0 &&
 			pApp!=NULL ) {
 					pApp->m_options.m_fUseDSMPlugin = true;
@@ -84,7 +84,8 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 	}
 	
 	// start the new connection.
-	return pApp->NewConnection ( host, iPort );
+	pApp->NewConnection ( host, iPort );
+	return TRUE;
 
 }
 
@@ -92,8 +93,8 @@ VOID CUltraVncAxGlobalConstructor::ProcessKeyEvent( HWND hwnd, WPARAM wParam, LP
 {
 	// call the implementation.
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
-	if ( pConn->m_running )
-		pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
+	//if ( pConn->m_running )
+	//	pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
 }
 
 charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& csCmdText, BOOL& bIsErr )
@@ -179,8 +180,8 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_NORMALSCREEN, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "viewonlytoggle" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_VIEWONLYTOGGLE, 0 );
-		else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
-			pConn->SizeWindow();
+		//else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
+		//	pConn->SizeWindow();
 		else
 		{
 			// return an error.

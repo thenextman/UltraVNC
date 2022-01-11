@@ -178,6 +178,10 @@ public:
 
 	int IsDormant(){ return m_dormant;};
 
+#ifdef _ULTRAVNCAX_
+	void SendFakeButtonEvent(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
+#endif
+
 	void SendKeyEvent(CARD32 key, bool down);
 
 	// adzm 2010-09
