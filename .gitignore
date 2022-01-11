@@ -91,11 +91,20 @@ libjpeg-turbo-win/DebugLib-Static/
 addon/ms-logon/logging/x64/
 *.suo
 
+**/Debug/**
+conan.lock
+conanbuildinfo.cmake
+conanbuildinfo.txt
+conaninfo.txt
+graph_info.json
 **/cmake_install.cmake
 **/CMakeCache.txt
-UltraVncAx.sln
+UltraVnc.sln
 **/UltraVncAx.vcxproj*
 **/ZERO_CHECK*
 **/ALL_BUILD*
 CMakeFiles
 .vs
+zstd.sln
+zstd.vcxproj*
+zstd/build/**

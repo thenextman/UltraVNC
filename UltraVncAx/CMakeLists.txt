@@ -12,7 +12,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "/OPT:REF /OPT:ICF /MACHINE:X86 /SUBSYSTEM:WINDOWS
 
 set(TARGET_NAME UltraVncAx)
 
-add_library(${TARGET_NAME} "")
+add_library(${TARGET_NAME} SHARED "")
 
 target_sources(${TARGET_NAME}
   PRIVATE
@@ -111,6 +111,11 @@ target_sources(${TARGET_NAME}
 
 add_dependencies(${TARGET_NAME} omnithread)
 add_dependencies(${TARGET_NAME} rdr)
+add_dependencies(${TARGET_NAME} unzip)
+add_dependencies(${TARGET_NAME} zip20)
+add_dependencies(${TARGET_NAME} zstd)
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}\\vncviewer\\omnithread)
 target_link_libraries(${TARGET_NAME} comctl32 winmm odbc32 odbccp32 wsock32)
+target_link_libraries(${TARGET_NAME} zstd)
+target_link_libraries(${TARGET_NAME} ${CONAN_TARGETS})

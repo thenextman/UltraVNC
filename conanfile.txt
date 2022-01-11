@@ -1,0 +1,7 @@
+
+[requires]
+libjpeg/2.1.0@devolutions/stable
+zlib/1.2.11@devolutions/stable
+
+[generators]
+cmake

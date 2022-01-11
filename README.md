@@ -9,3 +9,8 @@ nasm assembler compiler (https://www.nasm.us/)
 
 
 Load the project files vncviewer_vs2017.sln and winvncVS2017.sln to build server or viewer.
+
+##
+
+Prequisites: cmake conan
+cmake -G "Visual Studio 16 2019" -A Win32 .
