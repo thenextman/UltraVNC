@@ -112,3 +112,5 @@ zstd/build/**
 Interop.UltraVncAx.dll
 UltraVncAxInterop_gen*
 Generated/**
+**/UltraVncAxTest.sln
+**/UltraVncAxTest.csproj

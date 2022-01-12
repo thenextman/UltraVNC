@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(UltraVncAxText LANGUAGES CSharp)
+project(UltraVncAxTest LANGUAGES CSharp)
 
 include(CSharpUtilities)
 
-set(TARGET UltraVncAxText)
+set(TARGET UltraVncAxTest)
 
 add_executable(${TARGET}
     App.config
