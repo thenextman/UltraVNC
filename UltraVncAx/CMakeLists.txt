@@ -9,36 +9,21 @@ add_definitions("-D_AFXDLL -D_WINDLL")
 add_definitions("-D_WINSTATIC -D_ULTRAVNCAX_ -D_VIEWER")
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 set(TARGET_NAME UltraVncAx)
 
 add_library(${TARGET_NAME} SHARED "")
 
+add_dependencies(${TARGET_NAME} omnithread)
+add_dependencies(${TARGET_NAME} rdr)
+add_dependencies(${TARGET_NAME} unzip)
+add_dependencies(${TARGET_NAME} zip20)
+add_dependencies(${TARGET_NAME} zstd)
+add_dependencies(${TARGET_NAME} UltraVncAxInterop)
+
 set(RESOURCES
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\B46.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\back.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\both.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\closeup.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\cursor1.cur
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\cursorsel.cur
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\dir.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\drive.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\file.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\flash.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\front.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\hoch.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\idr_tray.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\mainicon.ico
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\maximizeup.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\minimizeup.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\nocursor.cur
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\none.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\pindown.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\stat\\pinup.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\quer.bmp
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\vnc32.BMP
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\vnc64.BMP
-  ${CMAKE_SOURCE_DIR}\\vncviewer\\res\\vncviewer.ico
+  ${CMAKE_SOURCE_DIR}\\Generated\\UltraVncAx.tlb
 )
 source_group("Resource Files" FILES ${RESOURCES})
 set(CMAKE_RC_FLAGS "${CMAKE_RC_FLAGS} /l 0x0410 /i ${CMAKE_SOURCE_DIR}\\vncviewer\\res")
@@ -102,6 +87,7 @@ target_sources(${TARGET_NAME}
     ${CMAKE_SOURCE_DIR}\\vncviewer\\VNCviewerApp32.cpp
     ${CMAKE_SOURCE_DIR}\\ZipUnZip32\\ZipUnzip32.cpp
     ${CMAKE_SOURCE_DIR}\\vncviewer\\zrle.cpp
+    UltraVncAx.rc
   PRIVATE
     ${CMAKE_SOURCE_DIR}\\vncviewer\\AboutBox.h
     ${CMAKE_SOURCE_DIR}\\vncviewer\\AccelKeys.h
@@ -134,18 +120,12 @@ target_sources(${TARGET_NAME}
     ${CMAKE_SOURCE_DIR}\\vncviewer\\VNCviewerApp.h
     ${CMAKE_SOURCE_DIR}\\vncviewer\\VNCviewerApp32.h
     ${CMAKE_SOURCE_DIR}\\ZipUnZip32\\ZipUnZip32.h
-    #UltraVncAx.idl
     ${RESOURCES}
 )
 
-add_dependencies(${TARGET_NAME} omnithread)
-add_dependencies(${TARGET_NAME} rdr)
-add_dependencies(${TARGET_NAME} unzip)
-add_dependencies(${TARGET_NAME} zip20)
-add_dependencies(${TARGET_NAME} zstd)
-
-target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}\\vncviewer\\omnithread)
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}\\vncviewer\\omnithread ${CMAKE_SOURCE_DIR\\Generated})
 target_link_libraries(${TARGET_NAME} comctl32 winmm odbc32 odbccp32 wsock32)
 target_link_libraries(${TARGET_NAME} zstd)
+target_link_libraries(${TARGET_NAME} UltraVncAxInterop)
 target_link_libraries(${TARGET_NAME} ${CONAN_TARGETS})
 

@@ -1,7 +1,6 @@
 // UltraVncAxObj.cpp : Implementation of CUltraVncAxObj
 
 #include "stdafx.h"
-#include "UltraVncAx.h"
 #include "UltraVncAxObj.h"
 
 #include <shlobj.h>

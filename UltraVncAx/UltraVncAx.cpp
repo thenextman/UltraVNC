@@ -8,8 +8,8 @@
 #include "stdafx.h"
 #include "resource.h"
 #include <initguid.h>
-#include "UltraVncAx.h"
 
+#include "UltraVncAx_i.h"
 #include "UltraVncAx_i.c"
 #include "UltraVncAxObj.h"
 

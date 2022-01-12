@@ -5,6 +5,7 @@
 
 #include "resource.h"       // main symbols
 #include <atlctl.h>
+#include "UltraVncAx_i.h"
 #include "UltraVncAxCP.h"
 
 /////////////////////////////////////////////////////////////////////////////

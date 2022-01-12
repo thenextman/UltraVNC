@@ -11,6 +11,7 @@ add_executable(${TARGET}
     Form1.cs
     Form1.Designer.cs
     Program.cs
+    UVNCaxHost.cs
     Properties/AssemblyInfo.cs
     Properties/Resources.Designer.cs
     Properties/Resources.resx
@@ -26,6 +27,7 @@ csharp_set_windows_forms_properties(
     Form1.cs
     Form1.Designer.cs
     Program.cs
+    UVNCaxHost.cs
     Properties/AssemblyInfo.cs
     Properties/Resources.Designer.cs
     Properties/Resources.resx
@@ -48,3 +50,6 @@ set_property(TARGET ${TARGET} PROPERTY VS_DOTNET_REFERENCES
     "System.Drawing"
     "System.Windows.Forms"
 )
+
+target_link_libraries(${TARGET} UltraVncAx)
+target_link_libraries(${TARGET} Interop.UltraVncAx)
