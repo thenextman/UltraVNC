@@ -364,13 +364,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR szCmdLin
 		setDPIpiAwarenessF =  (SetProcessDpiAwarenessFunc)GetProcAddress(shcoreDLL, "SetProcessDpiAwareness");
 	}
 
-	HRESULT hr = S_FALSE;
-	if (SetProcessDpiAwarenessContextF) 
-		hr = SetProcessDpiAwarenessContextF(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-	if (hr != S_OK && setDPIpiAwarenessF)
-		hr = setDPIpiAwarenessF(PROCESS_PER_MONITOR_DPI_AWARE);
-	if (hr != S_OK && (setDPIAwareF))
-		setDPIAwareF();
+	//HRESULT hr = S_FALSE;
+	//if (SetProcessDpiAwarenessContextF) 
+	//	hr = SetProcessDpiAwarenessContextF(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+	//if (hr != S_OK && setDPIpiAwarenessF)
+	//	hr = setDPIpiAwarenessF(PROCESS_PER_MONITOR_DPI_AWARE);
+	//if (hr != S_OK && (setDPIAwareF))
+	//	setDPIAwareF();
 
 	if (hUser32) 
 		FreeLibrary(hUser32);
