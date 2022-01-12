@@ -744,6 +744,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR szCmdLin
     LoadString(m_hInstResDLL, IDS_H102, sz_H102, 128 -1);
 //	RegisterLinkLabel(m_hInstResDLL);
 
+#ifdef _ULTRAVNCAX_
+// we need to return now, before the VNCviewerApp32 instance is created...
+    return 0;
+#endif
 
 	/////////////////////////////////////////////////////////////
 
@@ -842,13 +846,22 @@ bool ParseDisplay(LPTSTR display, LPTSTR phost, int hostlen, int *pport)
     if (hostlen < (int)_tcslen(display))
         return false;
 
+#ifdef _ULTRAVNCAX_
+    int tmp_port = -1;
+#else
     int tmp_port;
+#endif
     TCHAR *colonpos = _tcschr(display, L':');
     if (colonpos == NULL)
 	{
-		// No colon -- use default port number
-        tmp_port = RFB_PORT_OFFSET;
-		_tcsncpy_s(phost, 256, display, MAX_HOST_NAME_LEN);
+#ifdef _ULTRAVNCAX_
+	    if ((int)_tcslen(display) > 0)
+#endif
+	    {
+		    // No colon -- use default port number
+		    tmp_port = RFB_PORT_OFFSET;
+		    _tcsncpy_s(phost, 256, display, MAX_HOST_NAME_LEN);
+	    }
 	}
 	else
 	{

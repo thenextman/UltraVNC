@@ -84,7 +84,7 @@ BOOL CUltraVncAxGlobalConstructor::NewConnection ( CONST CHAR* pszHost , CONST C
 	}
 	
 	// start the new connection.
-	pApp->NewConnection ( host, iPort );
+	pApp->NewConnection( false, host, iPort);
 	return TRUE;
 
 }
@@ -93,8 +93,8 @@ VOID CUltraVncAxGlobalConstructor::ProcessKeyEvent( HWND hwnd, WPARAM wParam, LP
 {
 	// call the implementation.
 	ClientConnection*		pConn = (ClientConnection*) ::GetWindowLong( hwnd, GWL_USERDATA );
-	//if ( pConn->m_running )
-	//	pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
+	if ( pConn->m_running )
+		pConn->ProcessKeyEvent( (int) wParam, (DWORD) lParam );
 }
 
 charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& csCmdText, BOOL& bIsErr )
@@ -180,8 +180,8 @@ charstring CUltraVncAxGlobalConstructor::ExecuteCommand( HWND hwnd, charstring& 
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_NORMALSCREEN, 0 );
 		else if ( ::stricmp( csCmdText.c_str (), "viewonlytoggle" ) == 0 )
 			::SendMessage( hwnd, WM_SYSCOMMAND, ID_VIEWONLYTOGGLE, 0 );
-		//else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
-		//	pConn->SizeWindow();
+		else if ( ::stricmp( csCmdText.c_str (), "resize" ) == 0 )
+			pConn->SizeWindow();
 		else
 		{
 			// return an error.

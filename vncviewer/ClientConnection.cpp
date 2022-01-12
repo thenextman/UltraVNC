@@ -87,6 +87,27 @@ extern bool paintbuzy;
 extern HWND hFTWnd;
 #define FAILED(hr) (((HRESULT)(hr)) < 0)
 
+#ifdef _ULTRAVNCAX_
+extern HWND g_hwndAx; // HWND of the currently initializing ActiveX window.
+extern HWND g_hwndAppFrame; // HWND of the VNC APP main frame.
+#endif
+
+#ifdef _ULTRAVNCAX_
+static HWND GetTopMostWnd(HWND h)
+{
+	if (h == NULL)
+		return NULL;
+
+	while (1)
+	{
+		HWND prev = h;
+		h = GetParent(h);
+		if (h == NULL)
+			return prev;
+	}
+}
+#endif
+
 /*
  * Macro to compare pixel formats.
  */
@@ -673,7 +694,9 @@ void ClientConnection::Run()
 
 	// This starts the worker thread.
 	// The rest of the processing continues in run_undetached.
+#ifndef _ULTRAVNCAX_
 	LowLevelHook::Initialize(m_hwndMain);
+#endif
 	start_undetached();
 
 	EndDialog(m_hwndStatus,0);
@@ -1508,9 +1531,11 @@ void ClientConnection::CreateDisplay()
 	// adzm - 2010-07 - Fix clipboard hangs - we don't do this immediately anymore
 	//WatchClipboard();
 
+#ifndef _ULTRAVNCAX_
 	//Added by: Lars Werner (http://lars.werner.no)
-	if(TitleBar.GetSafeHwnd()==NULL)
+	if (TitleBar.GetSafeHwnd() == NULL)
 		TitleBar.Create(m_pApp->m_instance, m_hwndMain, !m_opts.m_Directx, &m_opts);
+#endif
 }
 
 // adzm - 2010-07 - Fix clipboard hangs
@@ -1681,6 +1706,9 @@ void ClientConnection::SetDSMPluginStuff()
 			if (strlen(m_clearPasswd) == 0) // Possibly set using -password command line
 			{
 				AuthDialog ad;
+#ifdef _ULTRAVNCAX_
+				ad.parent = GetTopMostWnd(m_hwndMain ? m_hwndMain : g_hwndAx);
+#endif
 				if (ad.DoDialog(false,m_host,m_port))
 				{
 					strncpy_s(m_clearPasswd, ad.m_passwd,254);
@@ -2431,9 +2459,9 @@ void ClientConnection::ConnectProxy()
 void ClientConnection::SetSocketOptions()
 {
 	// Disable Nagle's algorithm
-	BOOL nodelayval = TRUE;
-	if (setsockopt(m_sock, IPPROTO_TCP, TCP_NODELAY, (const char *) &nodelayval, sizeof(BOOL)))
-		throw WarningException(sz_L50);
+	//BOOL nodelayval = TRUE;
+	//if (setsockopt(m_sock, IPPROTO_TCP, TCP_NODELAY, (const char *) &nodelayval, sizeof(BOOL)))
+	//	throw WarningException(sz_L50);
 	
 	// adzm 2010-10
 	if (fis) {
@@ -3750,6 +3778,9 @@ void ClientConnection::SizeWindow(bool noPosChange, bool noSizeChange)
 		workwidth = workrect.right - workrect.left;
 		workheight = workrect.bottom - workrect.top;
 	}
+	::GetClientRect(::GetParent(m_hwndMain), &workrect);
+	workwidth = workrect.right - workrect.left;
+	workheight = workrect.bottom - workrect.top;
 	vnclog.Print(2, _T("Screen work area is %d x %d\n"), workwidth, workheight);
 
 
@@ -3985,7 +4016,11 @@ void ClientConnection::SizeWindow(bool noPosChange, bool noSizeChange)
         }
 	}
 
-    SetForegroundWindow(m_hwndMain);
+#ifndef _ULTRAVNCAX_
+	SetForegroundWindow(m_hwndMain);
+#else
+	SetFocus(::GetParent(m_hwndMain));
+#endif
 
 	if (m_opts.m_ShowToolbar)
 		MoveWindow(m_hwndTBwin, 0, 0, workwidth, m_TBr.bottom - m_TBr.top, TRUE);
@@ -4429,7 +4464,9 @@ ClientConnection::~ClientConnection()
 	WaitForSingleObject(KillUpdateThreadEvent, 6000);
 	if (m_pNetRectBuf != NULL)
 		delete [] m_pNetRectBuf;
+#ifndef _ULTRAVNCAX_
 	LowLevelHook::Release();
+#endif
 
 	// Modif sf@2002 - FileTransfer
 	if (m_pFileTransfer)
@@ -7451,22 +7488,44 @@ void ClientConnection::GTGBS_CreateDisplay()
     wndclass.lpszMenuName	= (const TCHAR *) NULL;
 	wndclass.lpszClassName	= _T("VNCMDI_Window");
 	RegisterClass(&wndclass);
-	const DWORD winstyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
+	DWORD winstyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
 	  WS_MINIMIZEBOX |WS_MAXIMIZEBOX | WS_THICKFRAME | WS_VSCROLL | WS_HSCROLL;
+
+#ifdef _ULTRAVNCAX_
+
+	winstyle = WS_CHILD | WS_VSCROLL | WS_HSCROLL;
+
+	int		x = CW_USEDEFAULT;
+	int		y = CW_USEDEFAULT;
+	int		w = 320;
+	int		h = 200;
+
+	x = 0;
+	y = 0;
+
+	RECT		rectClient;
+	::GetClientRect(g_hwndAx, &rectClient);
+	w = rectClient.right;
+	h = rectClient.bottom;
+
+	HWND parent = g_hwndAx;
+
+#endif
+
 	m_hwndMain = CreateWindow(_T("VNCMDI_Window"),
 			  _T("VNCviewer"),
 			  winstyle,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  CW_USEDEFAULT,
-			  //320,200,
-			  NULL,                // Parent handle
+			  x, y, w, h,
+			  parent,
 			  NULL,                // Menu handle
 			  m_pApp->m_instance,
 			  (LPVOID)this);
 	helper::SafeSetWindowUserData(m_hwndMain, (LONG_PTR)this);
 	ImmAssociateContext(m_hwndMain, NULL);	
+
+#ifdef _ULTRAVNCAX_
+	g_hwndAppFrame = m_hwndMain;
+#endif
 }
 
 //
@@ -7897,7 +7956,11 @@ LRESULT CALLBACK ClientConnection::WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 						}
 
 					case IDD_APP_ABOUT:
+#ifndef _ULTRAVNCAX_
 						ShowAboutBox();
+#else
+						ShowAboutBox(GetTopMostWnd(_this->m_hwndMain ? _this->m_hwndMain : g_hwndAx));
+#endif
 						return 0;
 
 					case ID_CONN_ABOUT:
@@ -8063,7 +8126,11 @@ LRESULT CALLBACK ClientConnection::WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 						// Call FileTransfer Dialog
 						_this->m_pFileTransfer->m_fFileTransferRunning = true;
 						_this->m_pFileTransfer->m_fFileCommandPending = false;
+#ifndef _ULTRAVNCAX_
 						_this->m_pFileTransfer->DoDialog();
+#else
+						_this->m_pFileTransfer->DoDialog(GetTopMostWnd(_this->m_hwndMain ? _this->m_hwndMain : g_hwndAx));
+#endif
 						_this->m_pFileTransfer->m_fFileTransferRunning = false;
 						// Refresh Screen
 						// _this->SendFullFramebufferUpdateRequest();
@@ -8523,7 +8590,7 @@ LRESULT CALLBACK ClientConnection::WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, 
 						// it hasn't already. Wait for it.
 						try {
 							void *p;
-							_this->join(&p);  // After joining, _this is no longer valid
+							//_this->join(&p);  // After joining, _this is no longer valid
 						} catch (omni_thread_invalid& e) {
 							// The thread probably hasn't been started yet,
 						}
@@ -8772,7 +8839,9 @@ LRESULT CALLBACK ClientConnection::WndProcTBwin(HWND hwnd, UINT iMsg, WPARAM wPa
     if (_this == NULL) return DefWindowProc(hwnd, iMsg, wParam, lParam);
 
 	HWND parent;
-	if (_this->m_opts.m_ShowToolbar==true)
+#ifndef _ULTRAVNCAX_
+	if (_this->m_opts.m_ShowToolbar == true)
+#endif
 		{
 			parent = _this->m_hwndMain;
 			switch (iMsg)
@@ -9099,7 +9168,9 @@ LRESULT CALLBACK ClientConnection::WndProchwnd(HWND hwnd, UINT iMsg, WPARAM wPar
 				if (!_this->m_running) return 0;
 				//					if (GetFocus() != hwnd) return 0;
 				//					if (GetFocus() != _this->m_hwnd) return 0;
+#ifndef _ULTRAVNCAX_
 				if (GetFocus() != _this->m_hwndMain) return 0;
+#endif
 				int x = LOWORD(lParam);
 				int y = HIWORD(lParam);
 				wParam = MAKEWPARAM(LOWORD(wParam), 0);

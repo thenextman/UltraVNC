@@ -46,4 +46,7 @@ public:
 	bool m_bPassphraseMode;
 	TCHAR _host[MAX_HOST_NAME_LEN];
 	int _port;
+#ifdef _ULTRAVNCAX_
+	HWND parent;
+#endif
 };

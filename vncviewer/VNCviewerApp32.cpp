@@ -90,19 +90,80 @@ void VNCviewerApp32::NewConnection(bool Is_Listening) {
 	} 
 }
 
+#ifdef _ULTRAVNCAX_
+
+typedef struct _STimeoutThreadState
+{
+	_STimeoutThreadState(ClientConnection* _connection, BOOL* _pbStateStructValid)
+	{
+		connected = FALSE;
+		connection = _connection;
+		pbStateStructValid = _pbStateStructValid;
+	}
+
+	BOOL				connected;
+	ClientConnection* connection;
+	BOOL* pbStateStructValid;
+
+} STimeoutThreadState;
+
+static DWORD WINAPI TimeoutThread(LPVOID lpParameter)
+{
+	STimeoutThreadState* pState = (STimeoutThreadState*)lpParameter;
+
+	// wait.
+	::Sleep(10 * 1000);
+
+	// we have to close the connection ?
+	if (pState->connected == FALSE)
+		pState->connection->KillThread();
+
+	// return.
+	if (pState->pbStateStructValid)
+		*pState->pbStateStructValid = FALSE;
+	delete pState;
+	return 0;
+}
+
+#endif
+
 void VNCviewerApp32::NewConnection(bool Is_Listening,TCHAR *host, int port) {
 	ClientConnection *pcc = new ClientConnection(this, host,port);
+
+#ifdef _ULTRAVNCAX_
+
+	BOOL						bStateStructValid = TRUE;
+
+	STimeoutThreadState* pState = new STimeoutThreadState(pcc, &bStateStructValid);
+	DWORD						dwID;
+
+	HANDLE		h = ::CreateThread(NULL, 0, &TimeoutThread, pState, 0, &dwID);
+
+	if (h)
+		::CloseHandle(h);
+#endif
+
 	try {
 		//memcpy((char*)&pcc->m_opts,(char*)&m_options,sizeof(m_options));
 		pcc->m_opts = m_options;
 		pcc->m_Is_Listening=Is_Listening;
 		pcc->Run();
+
+#ifdef _ULTRAVNCAX_
+		if (bStateStructValid)
+			pState->connected = TRUE;
+#endif
 	} catch (Exception &e) {
 //		DestroyWindow(pcc->m_hwndMain); 
 		pcc->CloseWindows();
 		e.Report();	
 		delete pcc;
 	} 
+
+#ifdef _ULTRAVNCAX_
+	if (bStateStructValid)
+		pState->pbStateStructValid = NULL;
+#endif
 }
 
 void VNCviewerApp32::NewConnection(bool Is_Listening,SOCKET sock) {

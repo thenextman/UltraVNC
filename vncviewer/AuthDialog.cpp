@@ -38,6 +38,9 @@
 //////////////////////////////////////////////////////////////////////
 
 AuthDialog::AuthDialog()
+#ifdef _ULTRAVNCAX_
+	: parent(NULL)
+#endif
 {
 	m_passwd[0]=__T('\0');
 	//adzm 2010-05-12 - passphrase
@@ -50,14 +53,20 @@ AuthDialog::~AuthDialog()
 
 int AuthDialog::DoDialog(bool ms_logon, TCHAR IN_host[MAX_HOST_NAME_LEN], int IN_port, bool isSecure, bool warning)
 {
+	HWND hwndParentWnd = NULL;
+
+#ifdef _ULTRAVNCAX_
+	hwndParentWnd = parent;
+#endif
+
 	TCHAR tempchar[10];
 	strcpy_s(_host, IN_host);
 	strcat_s(_host, ":");
 	strcat_s(_host, _itoa(IN_port, tempchar, 10));
-	if (isSecure) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG), NULL, (DLGPROC) DlgProc, (LONG_PTR) this);
-	else if (ms_logon) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG2), NULL, (DLGPROC) DlgProc, (LONG_PTR) this);
-	else if (warning) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG1), NULL, (DLGPROC) DlgProc1, (LONG_PTR) this);
-	else return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG3), NULL, (DLGPROC) DlgProc1, (LONG_PTR) this);
+	if (isSecure) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG), hwndParentWnd, (DLGPROC)DlgProc, (LONG_PTR)this);
+	else if (ms_logon) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG2), hwndParentWnd, (DLGPROC)DlgProc, (LONG_PTR)this);
+	else if (warning) return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG1), hwndParentWnd, (DLGPROC)DlgProc1, (LONG_PTR)this);
+	else return DialogBoxParam(pApp->m_instance, DIALOG_MAKEINTRESOURCE(IDD_AUTH_DIALOG3), hwndParentWnd, (DLGPROC)DlgProc1, (LONG_PTR)this);
 }
 
 BOOL CALLBACK AuthDialog::DlgProc(  HWND hwnd,  UINT uMsg,  
