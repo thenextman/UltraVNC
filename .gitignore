@@ -109,3 +109,6 @@ CMakeFiles
 zstd.sln
 zstd.vcxproj*
 zstd/build/**
+Interop.UltraVncAx.dll
+UltraVncAxInterop_gen*
+Generated/**

@@ -134,6 +134,7 @@ target_sources(${TARGET_NAME}
     ${CMAKE_SOURCE_DIR}\\vncviewer\\VNCviewerApp.h
     ${CMAKE_SOURCE_DIR}\\vncviewer\\VNCviewerApp32.h
     ${CMAKE_SOURCE_DIR}\\ZipUnZip32\\ZipUnZip32.h
+    #UltraVncAx.idl
     ${RESOURCES}
 )
 
