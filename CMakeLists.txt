@@ -19,14 +19,22 @@ add_definitions("-DWITH_JPEG")
 set(ZLIB_TARGET "CONAN_PKG::zlib")
 add_definitions("-DWITH_ZLIB")
 
-INCLUDE_EXTERNAL_MSPROJECT(omnithread ${CMAKE_SOURCE_DIR}\\vncviewer\\omnithread\\omnithread_VC2017.vcxproj)
-INCLUDE_EXTERNAL_MSPROJECT(rdr ${CMAKE_SOURCE_DIR}\\rdr\\rdr_VC2017.vcxproj)
-INCLUDE_EXTERNAL_MSPROJECT(zip20 ${CMAKE_SOURCE_DIR}\\zipunzip_src\\zip20\\windll\\visualc\\lib\\zip32_VC2017.vcxproj)
-INCLUDE_EXTERNAL_MSPROJECT(unzip ${CMAKE_SOURCE_DIR}\\zipunzip_src\\unzip\\windll\\vc6\\lib\\unz32lib_VC2017.vcxproj)
+INCLUDE_EXTERNAL_MSPROJECT(
+    omnithread "${CMAKE_SOURCE_DIR}/vncviewer/omnithread/omnithread_VC2017.vcxproj"
+)
+INCLUDE_EXTERNAL_MSPROJECT(
+    rdr "${CMAKE_SOURCE_DIR}/rdr/rdr_VC2017.vcxproj"
+)
+INCLUDE_EXTERNAL_MSPROJECT(
+    zip20 "${CMAKE_SOURCE_DIR}/zipunzip_src/zip20/windll/visualc/lib/zip32_VC2017.vcxproj"
+)
+INCLUDE_EXTERNAL_MSPROJECT(
+    unzip "${CMAKE_SOURCE_DIR}/zipunzip_src/unzip/windll/vc6/lib/unz32lib_VC2017.vcxproj"
+)
+
+find_package(IDL REQUIRED)
+add_idl(UltraVncAxInterop "UltraVncAx/UltraVncAx.idl" TLBIMP Interop.UltraVncAx)
 
 add_subdirectory(zstd)
 add_subdirectory(UltraVncAx)
 add_subdirectory(UltraVncAxTest)
-
-find_package(IDL REQUIRED)
-add_idl(UltraVncAxInterop "UltraVncAx/UltraVncAx.idl" TLBIMP Interop.UltraVncAx)

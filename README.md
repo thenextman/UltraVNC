@@ -1,16 +1,27 @@
 # UltraVNC
-UltraVNC Server and UltraVNC Viewer
 
-Required compilers
+### Updating the fork
 
-Visual Studio 2017 or 2019
+TODO
 
-nasm assembler compiler (https://www.nasm.us/)
+### Prequisites
 
+vs2019
+cmake
+conan
+nasm
 
-Load the project files vncviewer_vs2017.sln and winvncVS2017.sln to build server or viewer.
+### Build
 
-##
+```
+mkdir build && cd build
+cmake -G "Visual Studio 16 2019" -A Win32 ..
+cmake --build .
+```
 
-Prequisites: cmake conan
-cmake -G "Visual Studio 16 2019" -A Win32 .
+Or generate the project (`cmake -G...`) and open UltraVncAx.sln
+
+### TODO
+
+- x64 build. The build works by passing the `x64` architecture to cmake and ensuring that `_X64` is defined. However there are runtime issues with the interop library.
+- Generation of the AxInterop library and registration-free COM using AxHostEx.

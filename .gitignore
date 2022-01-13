@@ -92,6 +92,8 @@ addon/ms-logon/logging/x64/
 *.suo
 
 **/Debug/**
+**/Release/**
+build/**
 conan.lock
 conanbuildinfo.cmake
 conanbuildinfo.txt
